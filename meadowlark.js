@@ -29,6 +29,15 @@ app.get('/about', function(req, res) {
         pageTestScript: '/qa/tests-about.js'
     });
 });
+
+app.get('/tours/hood-river', function(req, res){
+    res.render('tours/hood-river');
+});
+
+app.get('/tours/request-group-rate', function(req, res){
+    res.render('tours/request-group-rate');
+});
+
 // Обобщенный обработчик 404 (промежуточное ПО)
 app.use(function(req, res, next){
     res.status(404);
