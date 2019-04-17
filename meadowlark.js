@@ -1,16 +1,22 @@
 var express = require('express');
+var fortune = require('./lib/fortune.js'); //точка в самом начале пути значит что не нужно искать модуль в папке node_modules
 var app = express(); // Установка механизма представления handlebars
 app.set('port', process.env.PORT || 3000);
 var handlebars = require('express-handlebars')
     .create({ defaultLayout:'main' });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
+app.use(express.static(__dirname + '/public')); // делает доступными для любого пользователя файлы из папки public
+
+
 
 app.get('/', function(req, res) {
     res.render('home');
 });
 app.get('/about', function(req, res) {
-    res.render('about');
+    var randomFortune =
+        fortunes[Math.floor(Math.random() * fortunes.length)];
+    res.render('about', { fortune: fortune.getFortune() });
 });
 // Обобщенный обработчик 404 (промежуточное ПО)
 app.use(function(req, res, next){
